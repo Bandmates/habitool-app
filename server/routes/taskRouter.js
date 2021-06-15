@@ -1,6 +1,7 @@
 const express = require('express');
 
 const taskController = require('../controllers/taskController.js');
+const authController = require('../controllers/authController');
 
 const taskRouter = express.Router();
 
@@ -9,6 +10,7 @@ const taskRouter = express.Router();
 
 taskRouter.post(
   '/addTask',
+  authController.auth,
   taskController.addTask,
   (req, res) => (
     res.status(200).json({ updatedDoc: res.locals.updatedDoc })
@@ -17,6 +19,7 @@ taskRouter.post(
 
 taskRouter.post(
   '/removeTask',
+  authController.auth,
   taskController.removeTask,
   (req, res) => (
     res.status(200).json({ updatedDoc: res.locals.updatedDoc })
@@ -25,6 +28,7 @@ taskRouter.post(
 
 taskRouter.post(
   '/editTask',
+  authController.auth,
   taskController.editTask,
   (req, res) => (
     res.status(200).json({ updatedDoc: res.locals.updatedDoc })
