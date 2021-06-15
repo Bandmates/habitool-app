@@ -34,8 +34,7 @@ loginController.verifyUser = async (req, res, next) => {
       { expiresIn: '1h' }
     );
 
-    res.locals.user = user;
-    res.locals.token = token;
+    res.locals = { user, token };
     next();
   } catch (e) {
     return next({

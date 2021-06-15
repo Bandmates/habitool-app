@@ -1,37 +1,44 @@
-const db = require("../models/mongooseModel.js");
-const bcrypt = require("bcryptjs");
+const db = require('../models/mongooseModel.js');
+const bcrypt = require('bcryptjs');
+const jwt = require('jwt');
+require('dotenv').config();
 
 const signupController = {};
 
 signupController.addUser = async (req, res, next) => {
-  console.log('in add user');
   const {
     email,
     password,
     name,
   } = req.body;
-  console.log(email, password, name);
+
   try {
-    const results = await db.User.find({ email });
-    if (results.length) return next({ err: "email has already been used" });
+    let user = await db.User.findOne({ email });
+
+    if (user) {
+      return next({
+        status: 400,
+        err: 'User already exists.',
+      });
+    }
+
+    const passwordDigest = await bcrypt.hash(password, 5);
+    user = await db.User.create({ name, email, password: passwordDigest });
+
+    const token = jwt.sign(
+      { email: user.email, id: user._id },
+      process.env.SECRET_STRING,
+      { expiresIn: '1h' }
+    );
+
+    res.locals = { user, token };
+    next();
   } catch (e) {
-    return next({ err: "error with searching db for email: " + e });
-  }
-  const hashedPass = await bcrypt.hash(password, 5);
-  const cookie = await bcrypt.hash(name, 5);
-  try {
-    await db.User.create({
-      email,
-      password: hashedPass,
-      fullName: name,
-      cookie,
-      habit: [],
+    return next({
+      err: 'Error while logging in',
+      errorLog: `An error occurred in the signupController.addUser middleware: ${ e }`,
     });
-  } catch (e) {
-    return next({ err: "error with inserting into user collection: " + e });
   }
-  res.cookie("SSID", cookie);
-  return next();
 };
 
 // signupController.addUser = async (req, res, next) => {
