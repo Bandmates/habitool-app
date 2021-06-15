@@ -19,7 +19,7 @@ loginRouter.post(
   '/',
   loginController.verifyUser,
   (req, res) => (
-    res.status(200).json({ doc: res.locals.doc })
+    res.status(200).json(res.locals)
   )
 );
 

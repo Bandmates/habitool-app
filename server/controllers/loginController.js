@@ -1,30 +1,47 @@
-const db = require("../models/mongooseModel.js");
-const bcrypt = require("bcryptjs");
+const db = require('../models/mongooseModel.js');
+const bcrypt = require('bcryptjs');
+const jwt = require('jwt');
+require('dotenv').config();
 
 const loginController = {};
 
 loginController.verifyUser = async (req, res, next) => {
   const { email, password } = req.body;
-  console.log("arrived here");
-  console.log('email', email);
+
   try {
-    // [ user, user2 ] = [a]
-    // user = a   user2 = undefined
-    const [user] = await db.User.find({ email });
-    console.log("return obj", user);
-    // [{password: fdashjfksda, cookie: jdfaslk}]
-    if (user === undefined) return next({ err: "invalid email/password" });
-    // {password: fasdjljkflds}
-    const { password: hashedPass, cookie } = user;
-    const passwordMatched = await bcrypt.compare(password, hashedPass);
-    if (passwordMatched) {
-      res.cookie("SSID", cookie);
-      res.locals.doc = user;
-      return next();
+    const user = await db.User.findOne({ email });
+
+    if (!user) {
+      return next({
+        status: 404,
+        err: 'No user found.',
+      });
     }
-    return next({ err: "invalid email/password" });
+
+    const passwordDigest = user.password;
+    const isSamePassword = await bcrypt.compare(password, passwordDigest);
+
+    if (!isSamePassword) {
+      return next({
+        status: 400,
+        err: 'Invalid login credentials.',
+      });
+    }
+
+    const token = jwt.sign(
+      { email: user.email, id: user._id },
+      process.env.SECRET_STRING,
+      { expiresIn: '1h' }
+    );
+
+    res.locals.user = user;
+    res.locals.token = token;
+    next();
   } catch (e) {
-    return next({ err: "error with searching for user pass in db: " + e });
+    return next({
+      err: 'Error while logging in',
+      errorLog: `An error occurred in the loginController.verifyUser middleware: ${ e }`,
+    });
   }
 };
 
