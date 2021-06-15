@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import axios from 'axios';
 import Cookie from 'js-cookie';
 import {
   USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS,
@@ -7,17 +7,13 @@ import {
 } from '../constants/userConstants';
 
 const signin = async (email, password, dispatch) => {
-  console.log('email1 is',email);
-  const copyEmail = email;
-  // return async (dispatch) => {
-  // dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } });
   dispatch({ type: USER_SIGNIN_REQUEST });
+
   try {
-    console.log('email2 is', copyEmail);
-    const {data} = await Axios.post('/login', { email: copyEmail, password });
-    console.log('query result',data);
+    const { data } = await axios.post('/login', { email, password });
+    debugger
     const { email, fullName, habit } = data.doc;
-    dispatch({ type: USER_SIGNIN_SUCCESS, payload: {email: copyEmail, fullName, habit} });
+    dispatch({ type: USER_SIGNIN_SUCCESS, payload: { email, fullName, habit} });
     // Cookie.set('userInfo', JSON.stringify(data));
   } catch (error) {
     dispatch({ type: USER_SIGNIN_FAIL, payload: error.message });
@@ -25,15 +21,14 @@ const signin = async (email, password, dispatch) => {
 };
 
 const register = (name, email, password) => async (dispatch) => {
-  // dispatch({ type: USER_REGISTER_REQUEST, payload: { name, email, password } });
   dispatch({ type: USER_REGISTER_REQUEST });
+
   try {
-    const { data } = await Axios.post('/signup', { name, email, password });
+    const { data } = await axios.post('/signup', { name, email, password });
     debugger
-    console.log(data);
+
     const actionPayload = { email, fullName: name };
     dispatch({ type: USER_REGISTER_SUCCESS, payload: actionPayload });
-    // Cookie.set('userInfo', JSON.stringify(data));
   } catch (error) {
     dispatch({ type: USER_REGISTER_FAIL, payload: error.message });
   }

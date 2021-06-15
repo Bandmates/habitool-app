@@ -1,7 +1,7 @@
 const express = require('express');
 
 const habitController = require('../controllers/habitController.js');
-const authController = require('../controllers/authController');
+const authController = require('../controllers/authController.js');
 
 const habitRouter = express.Router();
 

@@ -1,7 +1,7 @@
 const express = require('express');
 
 const taskController = require('../controllers/taskController.js');
-const authController = require('../controllers/authController');
+const authController = require('../controllers/authController.js');
 
 const taskRouter = express.Router();
 
