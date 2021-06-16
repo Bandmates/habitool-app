@@ -17,6 +17,12 @@ const taskRouter = require('./routes/taskRouter.js');
  * define route handlers
  */
 
+app.get('/assets/images/typer.png', (req, res) => {
+  console.log("in the fuckin' path");
+  express.static(path.resolve(__dirname, "../client/assets/images/tyler.png"))
+})
+// app.use(express.static(path.resolve(__dirname, "../client")));
+
 app.use(express.json());
 app.use(cookieParser());
 // localhost:5000/addHabit

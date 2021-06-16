@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import Confetti from 'react-confetti';
+
 import '../stylesheets/screenStyles/DashboardScreen.css';
 
 // Component Imports
@@ -23,13 +25,21 @@ const mapStateToProps = state =>{
   console.log('state',state);
   console.log('state.user',state.user);
   console.log('state.user.habit',state.user.habit);
-
+  
   return ({
     habits: state.user.habit
   });
 };
 
 const DashboardScreen = (props) => {
+  const [isTylerShowing, setIsTylerShowing] = useState(false);
+
+  const showTyler = () => {
+    setIsTylerShowing(true);
+
+    setTimeout(() => setIsTylerShowing(false), 2000);
+  };
+
   const arr = [];
   console.log(props);
   console.log(props.habits);
@@ -78,6 +88,7 @@ const DashboardScreen = (props) => {
         progress={el.progress}
         total
         timeOfDay={el.timeOfDay}
+        showTyler={showTyler}
       />
     );
   }); 
@@ -87,6 +98,18 @@ const DashboardScreen = (props) => {
       <div className="dashboard__habit-tiles">
         <StarterTile />
         {arr}
+        {isTylerShowing && (
+          <div id="tyler">
+            <Confetti
+              width={700}
+              height={600}
+              gravity={0.4}
+            />
+            <h1>Great job on completing your habit today!</h1>
+            <img src={'https://ca.slack-edge.com/T01RC358XEZ-U020W819AQ5-1da8c478da3b-512'}></img>
+            <h3>R.I.P.—heaven gained an angel...</h3>
+          </div>
+        )}
       </div>
     </div>
   );
