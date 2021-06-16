@@ -14,6 +14,7 @@ const StarterTile = (props) => {
   const [endDate, setEndDate] = useState('');
   const [description, setDescription] = useState('');
   const [timeOfDay, setTimeOfDay] = useState('');
+  const [typeOfHabit, setTypeOfHabit] = useState('')
   // const [habitType, sethabitType] = useState('');
 
   
@@ -41,7 +42,7 @@ const StarterTile = (props) => {
       endDate: endDate,
       cadence: cadence,
       timeOfDay: timeOfDay,
-      // habit;Type: habitType,
+      typeOfHabit: typeOfHabit,
     };
 
     createHabit(newHabit, dispatch);
@@ -63,6 +64,13 @@ const StarterTile = (props) => {
             <option value="5">5</option>
             <option value="6">6</option>
             <option value="7">7</option>
+          </select>
+        </div>
+        <div className="starter-tile__repeater">
+          <label htmlFor="cadence-selector">Type Of Habit:</label>
+          <select name="cadence-selector" id="cadence-selector" required onChange={(e) => setTypeOfHabit(e.target.value)}>
+            <option value="Positive">Positive</option>
+            <option value="Negative">Negative</option>
           </select>
         </div>
         <div id="start-date-group">

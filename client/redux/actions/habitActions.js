@@ -26,6 +26,7 @@ const headers = {
 };
 
 const createHabit = async ( habits, dispatch ) => {
+  // why have a request instead of just a success//fail
   dispatch({ type: CREATE_HABIT_REQUEST, payload: { habits } });
   const habitsCopy = habits;
   try {

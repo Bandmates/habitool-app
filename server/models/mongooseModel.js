@@ -20,33 +20,30 @@ const userSchema = new Schema({
   fullName: String,
   resetPasswordToken: String,
   resetPasswordExpire: Date,
-  habit: [
-    {
+  habit: [{
+    name: String,
+    description: String,
+    progress: Number,
+    total: Number,
+    weekly: [Number],
+    cadence: String,
+    streak: Number,
+    startDate: String,
+    endDate: String,
+    timeOfDay: String,
+    typeOfHabit: String,
+    tasks: [{
       name: String,
+      email: String,
       description: String,
       progress: Number,
-      total: Number,
-      weekly: [Number],
-      cadence: String,
-      streak: Number,
+      goalNum: Number,
+      isWeekly: Boolean,
       startDate: String,
       endDate: String,
-      timeOfDay: String,
-      tasks: [
-        {
-          name: String,
-          email: String,
-          description: String,
-          progress: Number,
-          goalNum: Number,
-          isWeekly: Boolean,
-          startDate: String,
-          endDate: String,
-          history: [String],
-        },
-      ],
-    },
-  ],
+      history: [String],
+    }, ],
+  }, ],
 });
 
 const User = mongoose.model('User', userSchema);
