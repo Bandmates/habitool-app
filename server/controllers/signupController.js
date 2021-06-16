@@ -1,6 +1,6 @@
 const db = require('../models/mongooseModel.js');
 const bcrypt = require('bcryptjs');
-const jwt = require('jwt');
+const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const signupController = {};
@@ -11,10 +11,10 @@ signupController.addUser = async (req, res, next) => {
     password,
     name,
   } = req.body;
-
+  console.log(req.body);
   try {
     let user = await db.User.findOne({ email });
-
+    console.log(user);
     if (user) {
       return next({
         status: 400,
@@ -23,14 +23,15 @@ signupController.addUser = async (req, res, next) => {
     }
 
     const passwordDigest = await bcrypt.hash(password, 5);
+    console.log(passwordDigest);
     user = await db.User.create({ name, email, password: passwordDigest });
-
+    console.log(user);
     const token = jwt.sign(
       { email: user.email, id: user._id },
       process.env.SECRET_STRING,
       { expiresIn: '1h' }
     );
-
+    console.log(user);
     res.locals = { success: true, user, token };
     next();
   } catch (e) {

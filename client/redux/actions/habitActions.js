@@ -21,13 +21,19 @@ import {
 //   };
 // };
 
-
+const headers = {
+  Authorization: `Bearer ${localStorage.getItem('authToken')}`
+};
 
 const createHabit = async ( habits, dispatch ) => {
   dispatch({ type: CREATE_HABIT_REQUEST, payload: { habits } });
   const habitsCopy = habits;
   try {
-    const { data } = await Axios.post('/habit/addHabit', habitsCopy);
+    const { data } = await Axios.post(
+      '/habit/addHabit',
+      habitsCopy,
+      headers,
+    );
     const habit = data.updatedDoc.habit;
     console.log(data); // {docs: {fdsjakl} } data.docs.habit
     dispatch({ type: CREATE_HABIT_SUCCESS, payload: habit });
@@ -40,7 +46,11 @@ const updateHabit = async ( habit, dispatch ) => {
   dispatch({ type: UPDATE_HABIT_REQUEST});
   const habitCopy = habit;
   try {
-    const { data } = await Axios.post('/habit/editHabit', habitCopy);
+    const { data } = await Axios.post(
+      '/habit/editHabit',
+      habitCopy,
+      headers,
+    );
     console.log(data);
     const actionPayload = data.updatedDoc.habit;
     console.log(actionPayload);
@@ -80,7 +90,11 @@ const deleteHabit = async ( habit, dispatch ) => {
   const habitCopy = habit;
   dispatch({ type: DELETE_HABIT_REQUEST });
   try {
-    const { data } = await Axios.post('/habit/removeHabit',  habitCopy );
+    const { data } = await Axios.post(
+      '/habit/removeHabit',
+      habitCopy,
+      headers,
+    );
     console.log('hello 1');
     console.log(data);
     console.log('hello 2');

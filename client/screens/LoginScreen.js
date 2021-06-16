@@ -19,6 +19,13 @@ const mapStateToProps = state => ({
 const LoginScreen = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const history = useHistory();
+
+  useEffect(() => {
+    if (localStorage.getItem('authToken')) {
+      history.push('/dashboard');
+    }
+  }, [history]);
 
   const dispatch = useDispatch();
 
@@ -28,7 +35,6 @@ const LoginScreen = (props) => {
   const userInfo = props.email;
   const error = props.error;
 
-  const history = useHistory();
 
 
   const loginSubmitHandler = (e) => {

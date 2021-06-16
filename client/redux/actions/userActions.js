@@ -12,7 +12,16 @@ const signin = async (email, password, history, dispatch) => {
   try {
     const { data } = await axios.post('/login', { email, password });
     debugger
-    const { email: newEmail, fullName, habit } = data.doc;
+    const {
+      user: {
+        email: newEmail,
+        fullName,
+        habit,
+      },
+      token,
+      success,
+    } = data;
+    localStorage.setItem('authToken', token);
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: { email: newEmail, fullName, habit} });
     history.push('/dashboard');
     // Cookie.set('userInfo', JSON.stringify(data));
@@ -21,14 +30,15 @@ const signin = async (email, password, history, dispatch) => {
   }
 };
 
-const register = (name, email, password) => async (dispatch) => {
+const register = (name, email, password, history) => async (dispatch) => {
   dispatch({ type: USER_REGISTER_REQUEST });
 
   try {
     const { data } = await axios.post('/signup', { name, email, password });
-    debugger
+    const { token, success } = data;
 
     const actionPayload = { email, fullName: name };
+    localStorage.setItem('authToken', token);
     dispatch({ type: USER_REGISTER_SUCCESS, payload: actionPayload });
     history.push('/dashboard');
   } catch (error) {
@@ -36,9 +46,14 @@ const register = (name, email, password) => async (dispatch) => {
   }
 };
 
-const logout = () => (dispatch) => {
-  Cookie.remove('userInfo');
+const logout = (history) => (dispatch) => {
+  debugger
+  console.log('in logout');
+  localStorage.removeItem('authToken');
+  console.log(localStorage);
   dispatch({ type: USER_LOGOUT });
+  console.log(history);
+  history.push('/');
 };
 
 export { signin, register, logout };

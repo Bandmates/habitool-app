@@ -1,6 +1,6 @@
 const db = require('../models/mongooseModel.js');
 const bcrypt = require('bcryptjs');
-const jwt = require('jwt');
+const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const loginController = {};

@@ -1,10 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { useSelector, useDispatch, connect } from 'react-redux';
+
+import { logout } from '../redux/actions/userActions';
+
 import '../stylesheets/componentStyles/Menu.css';
 
 const Menu = ({ show, click }) => {
   // create a var to an array with an element ['menu']
   const menuClass = ['menu'];
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleLogOut = () => {
+    dispatch(logout(history));
+    // logout({
+    //   history
+    // }, dispatch);
+  };
 
   if(show) {
     menuClass.push('show');
@@ -25,9 +38,9 @@ const Menu = ({ show, click }) => {
           </Link>
         </li>
         <li>
-          <Link to="/logout">
+          <button onClick={handleLogOut}>
               Sign Out
-          </Link>
+          </button>
         </li>
       </ul>
     </div>
