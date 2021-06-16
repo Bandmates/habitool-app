@@ -19,18 +19,28 @@
 }
 
 .habit-tile__header_Positive {
-  background-color: green;
+  background-color: #4CAF50;
 }
 
 .habit-tile__header_Negative {
-  background-color: red;
+  background-color: #EF5350;
 }
 
-.habit-tile__header > h2 {
+.habit-tile__header_Negative > h2 {
   font-weight: 400;
 }
 
-.habit-tile__header > h2 > a {
+.habit-tile__header_Positive > h2 {
+  font-weight: 400;
+}
+
+.habit-tile__header_Negative > h2 > a {
+  text-transform: capitalize;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.habit-tile__header_Positive > h2 > a {
   text-transform: capitalize;
   color: #ffffff;
   text-decoration: none;
