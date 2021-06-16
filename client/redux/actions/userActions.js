@@ -21,8 +21,14 @@ const signin = async (email, password, history, dispatch) => {
       token,
       success,
     } = data;
+
+    const user =  { email: newEmail, fullName, habit };
+
     localStorage.setItem('authToken', token);
-    dispatch({ type: USER_SIGNIN_SUCCESS, payload: { email: newEmail, fullName, habit} });
+    localStorage.setItem('fullName', fullName);
+    localStorage.setItem('habit', habit);
+    localStorage.setItem('email', newEmail);
+    dispatch({ type: USER_SIGNIN_SUCCESS, payload: user });
     history.push('/dashboard');
     // Cookie.set('userInfo', JSON.stringify(data));
   } catch (error) {
@@ -35,10 +41,13 @@ const register = (name, email, password, history) => async (dispatch) => {
 
   try {
     const { data } = await axios.post('/signup', { name, email, password });
-    const { token, success } = data;
+    const { user, token, success } = data;
 
     const actionPayload = { email, fullName: name };
     localStorage.setItem('authToken', token);
+    localStorage.setItem('fullName', user.fullName);
+    localStorage.setItem('habit', user.habit);
+    localStorage.setItem('email', user.email);
     dispatch({ type: USER_REGISTER_SUCCESS, payload: actionPayload });
     history.push('/dashboard');
   } catch (error) {

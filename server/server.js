@@ -45,11 +45,12 @@ app.use('/login', loginRouter);
 
 app.use('*', (req, res) => res.status(404).send('NotFound'));
 
+
 app.use((e, req, res, next) => {
   const defaultErr = {
     status: 500,
     err: 'An error occurred',
-    errorLog: 'An error occured somewhere on the backend.'
+    errorLog: 'An error occurred somewhere on the backend.'
   };
   const errorObj = Object.assign({}, defaultErr, e);
   console.log(errorObj.errorLog);

@@ -10,7 +10,6 @@ const habitRouter = express.Router();
 
 habitRouter.post(
   '/addHabit',
-  authController.auth,
   habitController.addHabit,
   (req, res) => (
     res.status(200).json({ updatedDoc: res.locals.updatedDoc })
@@ -19,7 +18,6 @@ habitRouter.post(
 
 habitRouter.post(
   '/removeHabit',
-  authController.auth,
   habitController.removeHabit,
   (req, res) => (
     res.status(200).json({ updatedDoc: res.locals.updatedDoc })
@@ -28,7 +26,6 @@ habitRouter.post(
 
 habitRouter.post(
   '/editHabit',
-  authController.auth,
   habitController.editHabit,
   (req, res) => (
     res.status(200).json({ updatedDoc: res.locals.updatedDoc })

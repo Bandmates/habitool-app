@@ -3,6 +3,7 @@
 import * as types from '../constants/userConstants.js';
 import * as actionTypes from '../constants/actionTypes.js';
 
+debugger;
 const initialState = {
   email: '',
   // password: '',

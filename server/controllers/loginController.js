@@ -9,8 +9,9 @@ loginController.verifyUser = async (req, res, next) => {
   const { email, password } = req.body;
 
   try {
+    console.log('before getting user');
     const user = await db.User.findOne({ email });
-
+    console.log(user);
     if (!user) {
       return next({
         status: 404,
@@ -27,7 +28,8 @@ loginController.verifyUser = async (req, res, next) => {
         err: 'Invalid login credentials.',
       });
     }
-
+    console.log('made it to line 31');
+    console.log(process.env.SECRET_STRING);
     const token = jwt.sign(
       { email: user.email, id: user._id },
       process.env.SECRET_STRING,

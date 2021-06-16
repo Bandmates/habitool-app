@@ -5,6 +5,7 @@ const habitController = {};
 habitController.addHabit = async (req, res, next) => {
   // req.body -> {email: dasfjlk, habit: 'fdas', description: ''}
   // req.cookies = {ssid: 'fdsjalk'}
+  console.log('do I see this?')
   console.log(req.body);
   const { email, habit, description, total, startDate, endDate, cadence } = req.body;
   // console.log(req.cookies);
