@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 // App CSS Import
 import './stylesheets/App.css';
 
+import PrivateRoute from './routing/PrivateRoute';
+
 // Screens Imports
 import DashboardScreen from './screens/DashboardScreen';
 import HabitScreen from './screens/HabitScreen';
@@ -33,10 +35,8 @@ const App = () => {
           <Route exact path='/signup'>
             <SignupScreen />
           </Route>
-          <Route path='/dashboard/habit' component={HabitScreen} />
-          <Route path='/dashboard'>
-            <DashboardScreen />
-          </Route>
+          <PrivateRoute exact path='/dashboard/habit' component={HabitScreen}/>
+          <PrivateRoute path='/dashboard' component={DashboardScreen}/>
         </Switch>
       </main>
     </Router>

@@ -18,7 +18,7 @@ signupRouter.post(
   '/',
   signupController.addUser,
   (req, res) => (
-    res.status(200).json({ result: 'pass' })
+    res.status(200).json(res.locals)
   )
 );
 

@@ -16,6 +16,7 @@ const taskRouter = require('./routes/taskRouter.js');
 /**
  * define route handlers
  */
+
 app.use(express.json());
 app.use(cookieParser());
 // localhost:5000/addHabit
@@ -48,9 +49,10 @@ app.use((e, req, res, next) => {
   const defaultErr = {
     status: 500,
     err: 'An error occurred',
+    errorLog: 'An error occured somewhere on the backend.'
   };
   const errorObj = Object.assign({}, defaultErr, e);
-  console.log(errorObj.err);
+  console.log(errorObj.errorLog);
   return res.status(errorObj.status).json(errorObj.err);
 });
 

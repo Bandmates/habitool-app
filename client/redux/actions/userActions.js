@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import axios from 'axios';
 import Cookie from 'js-cookie';
 import {
   USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS,
@@ -6,42 +6,54 @@ import {
   USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_LOGOUT
 } from '../constants/userConstants';
 
-const signin = async (email, password, dispatch) => {
-  console.log('email1 is',email);
-  const copyEmail = email;
-  // return async (dispatch) => {
-  // dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } });
+const signin = async (email, password, history, dispatch) => {
   dispatch({ type: USER_SIGNIN_REQUEST });
+
   try {
-    console.log('email2 is', copyEmail);
-    const {data} = await Axios.post('/login', { email: copyEmail, password });
-    console.log('query result',data);
-    const { email, fullName, habit } = data.doc;
-    dispatch({ type: USER_SIGNIN_SUCCESS, payload: {email: copyEmail, fullName, habit} });
+    const { data } = await axios.post('/login', { email, password });
+    debugger
+    const {
+      user: {
+        email: newEmail,
+        fullName,
+        habit,
+      },
+      token,
+      success,
+    } = data;
+    localStorage.setItem('authToken', token);
+    dispatch({ type: USER_SIGNIN_SUCCESS, payload: { email: newEmail, fullName, habit} });
+    history.push('/dashboard');
     // Cookie.set('userInfo', JSON.stringify(data));
   } catch (error) {
     dispatch({ type: USER_SIGNIN_FAIL, payload: error.message });
   }
 };
 
-const register = (name, email, password) => async (dispatch) => {
-  // dispatch({ type: USER_REGISTER_REQUEST, payload: { name, email, password } });
+const register = (name, email, password, history) => async (dispatch) => {
   dispatch({ type: USER_REGISTER_REQUEST });
+
   try {
-    const { data } = await Axios.post('/signup', { name, email, password });
-    debugger
-    console.log(data);
+    const { data } = await axios.post('/signup', { name, email, password });
+    const { token, success } = data;
+
     const actionPayload = { email, fullName: name };
+    localStorage.setItem('authToken', token);
     dispatch({ type: USER_REGISTER_SUCCESS, payload: actionPayload });
-    // Cookie.set('userInfo', JSON.stringify(data));
+    history.push('/dashboard');
   } catch (error) {
     dispatch({ type: USER_REGISTER_FAIL, payload: error.message });
   }
 };
 
-const logout = () => (dispatch) => {
-  Cookie.remove('userInfo');
+const logout = (history) => (dispatch) => {
+  debugger
+  console.log('in logout');
+  localStorage.removeItem('authToken');
+  console.log(localStorage);
   dispatch({ type: USER_LOGOUT });
+  console.log(history);
+  history.push('/');
 };
 
 export { signin, register, logout };
