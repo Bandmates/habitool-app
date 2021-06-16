@@ -15,15 +15,21 @@ const HabitTile = (props) => {
     deleteHabit({ email: props.email, habit: props.name }, dispatch);
   };
   const [habitId, setHabitId] = useState('');
-
+  const headerType = `habit-tile__header_${props.typeOfHabit}`
+  
   return (
     <div className="habit-tile">
-      <div className="habit-tile__header">
+      
+      <div className={headerType}>
         <h2>
           <Link to={`dashboard/habit/${props.name}`}>{props.name}</Link>
         </h2>
       </div>
       <div className="habit-tile__content-container">
+      <div className="habit-tile__goal-desc">
+          <h4>Type of Habit:</h4>
+          <p>{props.typeOfHabit}</p>
+        </div>
         <div className="habit-tile__goal-desc">
           <h4>Your Goal:</h4>
           <p>{props.description}</p>

@@ -88,6 +88,7 @@ const DashboardScreen = (props) => {
         progress={el.progress}
         total
         timeOfDay={el.timeOfDay}
+        typeOfHabit={el.typeOfHabit}
         showTyler={showTyler}
       />
     );
