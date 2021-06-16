@@ -17,8 +17,9 @@ mongoose
 const userSchema = new Schema({
   email: String,
   password: String,
-  full_name: String,
-  cookie: String,
+  fullName: String,
+  resetPasswordToken: String,
+  resetPasswordExpire: Date,
   habit: [
     {
       name: String,

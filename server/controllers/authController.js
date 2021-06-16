@@ -1,3 +1,4 @@
+const db = require('../models/mongooseModel.js');
 const jwt = require('jwt');
 require('dotenv').config();
 
@@ -7,8 +8,11 @@ authController.auth = async (req, res, next) => {
   try {
     const token = req.headers.authorization.split(' ')[1];
     const decodedData = jwt.verify(token, process.env.SECRET_STRING);
-    req.userId = decodedData?.id;
+    const id = decodedData?.id;
 
+    const user = await db.User.findById(id);
+    req.user = user;
+    next();
   } catch (e) {
     next({
       err: "you made a fucky wucky in authController.auth",

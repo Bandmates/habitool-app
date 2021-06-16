@@ -28,21 +28,21 @@ const LoginScreen = (props) => {
   const userInfo = props.email;
   const error = props.error;
 
-  const history = useHistory()
+  const history = useHistory();
 
 
   const loginSubmitHandler = (e) => {
     e.preventDefault();
     // dispatch(signin(email, password));
-    signin(email,password, dispatch);
+    signin(email , password, history, dispatch);
   };
 
-  useEffect(() => {
-    if (userInfo) {
-      // history.push(`/dashboard/${userInfo.name}`);
-      history.push(`/dashboard`);
-    }
-  }, [userInfo]);
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     // history.push(`/dashboard/${userInfo.name}`);
+  //     history.push(`/dashboard`);
+  //   }
+  // }, [userInfo]);
 
   return (
     <div className="login__screen">

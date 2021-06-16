@@ -31,7 +31,7 @@ signupController.addUser = async (req, res, next) => {
       { expiresIn: '1h' }
     );
 
-    res.locals = { user, token };
+    res.locals = { success: true, user, token };
     next();
   } catch (e) {
     return next({
