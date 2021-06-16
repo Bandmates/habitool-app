@@ -31,6 +31,7 @@ const userSchema = new Schema({
       streak: Number,
       startDate: String,
       endDate: String,
+      timeOfDay: String,
       tasks: [
         {
           name: String,
