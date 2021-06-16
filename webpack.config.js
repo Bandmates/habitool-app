@@ -44,6 +44,10 @@ module.exports = {
       '/habit': {
         target: 'http://localhost:5000',
         secure: false
+      },
+      '/assets/**': {
+        target: 'http://localhost:5000',
+        secure: false
       }
     }
   },
@@ -67,7 +71,7 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'file-loader',
         options: {
-          name: '/public/images/[name].[ext]',
+          name: '/client/assets/images/[name].[ext]',
         },
       },
     ],

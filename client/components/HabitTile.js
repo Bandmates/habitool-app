@@ -84,7 +84,7 @@ const HabitTile = (props) => {
           </div>
         </div>
         <div className="habit-tile__btn-grp">
-          <button id="habit__check-btn">
+          <button id="habit__check-btn" onClick={props.showTyler}>
             <i className="fas fa-check"></i>
           </button>
 
@@ -106,4 +106,3 @@ const HabitTile = (props) => {
 
 
 export default connect(mapStateToProps, null)(HabitTile);
-
