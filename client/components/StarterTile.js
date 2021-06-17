@@ -14,11 +14,7 @@ const StarterTile = (props) => {
   const [endDate, setEndDate] = useState('');
   const [description, setDescription] = useState('');
   const [timeOfDay, setTimeOfDay] = useState('');
-  const [typeOfHabit, setTypeOfHabit] = useState('')
-  // const [habitType, sethabitType] = useState('');
-
-  
-
+  const [typeOfHabit, setTypeOfHabit] = useState('Positive');
 
   // dispatch() is the method used to dispatch actions and trigger state changes to the store. 
   const dispatch = useDispatch();
@@ -30,8 +26,6 @@ const StarterTile = (props) => {
     e.preventDefault();
     console.log(timeOfDay);
     console.log(typeof timeOfDay);
-
-    debugger
 
     const newHabit = {
       email: props.email,
