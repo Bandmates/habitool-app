@@ -11,7 +11,7 @@ const signin = async (email, password, history, dispatch) => {
 
   try {
     const { data } = await axios.post('/login', { email, password });
-    debugger
+
     const {
       user: {
         email: newEmail,
@@ -56,7 +56,6 @@ const register = (name, email, password, history) => async (dispatch) => {
 };
 
 const logout = (history) => (dispatch) => {
-  debugger
   console.log('in logout');
   localStorage.removeItem('authToken');
   console.log(localStorage);
